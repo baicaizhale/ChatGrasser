@@ -9,6 +9,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.Bukkit;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class GrasserPlugin extends JavaPlugin {
 
@@ -72,6 +75,7 @@ public class GrasserPlugin extends JavaPlugin {
 class ChatListener implements Listener {
 
     private final GrasserPlugin plugin;
+    private final Set<UUID> bypassChatModifier = new HashSet<>();
 
     public ChatListener(GrasserPlugin plugin) {
         this.plugin = plugin;
@@ -79,6 +83,11 @@ class ChatListener implements Listener {
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        if (bypassChatModifier.contains(event.getPlayer().getUniqueId())) {
+            bypassChatModifier.remove(event.getPlayer().getUniqueId());
+            return; // Bypass modification for this message
+        }
+
         if (!plugin.isChatModifierEnabled()) {
             return;
         }
@@ -101,6 +110,7 @@ class ChatListener implements Listener {
             }
             // 将修改后的消息发送到聊天框
             Bukkit.getScheduler().runTask(plugin, () -> {
+                bypassChatModifier.add(event.getPlayer().getUniqueId());
                 event.getPlayer().chat(modifiedMessage); // 使用 chat 方法以确保消息格式正确
             });
         });
