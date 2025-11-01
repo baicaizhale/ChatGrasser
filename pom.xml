@@ -6,9 +6,9 @@
 
   <groupId>org.YanPl</groupId>
   <artifactId>Grasser</artifactId>
-  <version>v1.0.0-SNAPSHOT</version>
+  <version>SNAPSHOT</version>
 
-  <name>Grasser</name>
+  <name>ChatGrasser</name>
 
   <properties>
     <java.version>17</java.version>
@@ -16,6 +16,7 @@
   </properties>
 
   <build>
+    <defaultGoal>clean package</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -62,7 +63,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.20.1-R0.1-SNAPSHOT</version>
+      <version>1.18-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

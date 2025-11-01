@@ -12,7 +12,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class GrasserPlugin extends JavaPlugin {
 
-    private String cloudflareAccountId;
     private String cloudflareApiKey;
     private String cloudflareModelId;
     private boolean chatModifierEnabled;
@@ -28,14 +27,13 @@ public class GrasserPlugin extends JavaPlugin {
         saveDefaultConfig(); // 保存默认配置
         FileConfiguration config = getConfig();
 
-        cloudflareAccountId = config.getString("cloudflare.account_id");
         cloudflareApiKey = config.getString("cloudflare.api_key");
         cloudflareModelId = config.getString("cloudflare.model_id");
         chatModifierEnabled = config.getBoolean("chat_modifier.enabled");
         chatModifierPromptPrefix = config.getString("chat_modifier.prompt_prefix");
         chatModifierPromptSuffix = config.getString("chat_modifier.prompt_suffix");
 
-        this.aiClient = new CloudflareAIClient(this, cloudflareAccountId, cloudflareApiKey, cloudflareModelId);
+        this.aiClient = new CloudflareAIClient(this, cloudflareApiKey, cloudflareModelId);
 
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
     }
@@ -44,10 +42,6 @@ public class GrasserPlugin extends JavaPlugin {
     public void onDisable() {
         // 插件禁用逻辑
         getLogger().info("GrasserPlugin has been disabled!");
-    }
-
-    public String getCloudflareAccountId() {
-        return cloudflareAccountId;
     }
 
     public String getCloudflareApiKey() {

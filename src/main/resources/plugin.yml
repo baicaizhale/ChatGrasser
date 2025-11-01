@@ -1,4 +1,4 @@
-name: GrasserPlugin
+name: ChatGrasser
 version: "1.0"
 main: org.YanPl.grasser.GrasserPlugin
 api-version: 1.18
