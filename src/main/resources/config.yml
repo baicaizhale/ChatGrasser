@@ -1,0 +1,9 @@
+cloudflare:
+  account_id: "e607239dba3500c1a85a15d9c37c90d6"
+  api_key: "wJkXQjKCONw4-0rS2x-gTT-YVJC1rOjQQVdzQ5RS"
+  model_id: "@cf/openai/gpt-oss-120b"
+
+chat_modifier:
+  enabled: true
+  prompt_prefix: "请将以下聊天内容修改得更生草："
+  prompt_suffix: ""

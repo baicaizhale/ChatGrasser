@@ -1,5 +1,4 @@
-name: Grasser
-version: 'v1.0.0-SNAPSHOT'
-main: org.YanPl.grasser.Grasser
-api-version: '1.18'
-authors: [YanPl]
+name: GrasserPlugin
+version: "1.0"
+main: org.YanPl.grasser.GrasserPlugin
+api-version: 1.18
