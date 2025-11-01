@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.YanPl</groupId>
-  <artifactId>Grasser</artifactId>
+  <artifactId>ChatGrasser</artifactId>
   <version>SNAPSHOT</version>
 
   <name>ChatGrasser</name>

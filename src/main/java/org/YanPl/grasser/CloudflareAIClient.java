@@ -86,7 +86,9 @@ public class CloudflareAIClient {
     public CompletableFuture<String> getModifiedChat(String originalMessage, String promptPrefix, String promptSuffix) {
         CompletableFuture<String> future = new CompletableFuture<>();
 
-        String fullPrompt = promptPrefix + originalMessage + promptSuffix + " Please ensure the response only contains standard, safe characters suitable for chat messages, avoiding any special or illegal characters that might cause issues in a game chat.";
+        String fullPrompt = promptPrefix + originalMessage + promptSuffix ;
+        plugin.getLogger().info("用户发送的原始消息: " + originalMessage);
+        plugin.getLogger().info("发送给AI的完整提示: " + fullPrompt);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
@@ -102,7 +104,8 @@ public class CloudflareAIClient {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setDoOutput(true);
 
-                String jsonInputString = "{\"model\": \"" + MODEL_NAME + "\", \"input\": [{\"role\": \"user\", \"content\": \"" + fullPrompt + "\"}]}";
+                String escapedFullPrompt = JSONObject.quote(fullPrompt);
+                String jsonInputString = "{\"model\": \"" + MODEL_NAME + "\", \"input\": [{\"role\": \"user\", \"content\": " + escapedFullPrompt + "}]}";
 
                 try (OutputStream os = connection.getOutputStream()) {
                     byte[] input = jsonInputString.getBytes("utf-8");
@@ -117,6 +120,7 @@ public class CloudflareAIClient {
                         while ((responseLine = br.readLine()) != null) {
                             response.append(responseLine.trim());
                         }
+                        plugin.getLogger().info("AI返回的原始响应: " + response.toString());
                         JSONObject jsonResponse = new JSONObject(response.toString());
                         if (jsonResponse.has("result")) {
                             JSONObject result = jsonResponse.getJSONObject("result");
@@ -143,6 +147,7 @@ public class CloudflareAIClient {
                                 }
 
                                 if (aiResponse != null) {
+                                    plugin.getLogger().info("AI解析后的响应: " + aiResponse);
                                     future.complete(aiResponse);
                                 } else {
                                     plugin.getLogger().severe("Cloudflare AI API response missing 'output_text' in content: " + response.toString());
